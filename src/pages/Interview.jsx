@@ -34,7 +34,7 @@ function Interview() {
 };
 
   return (
-    <div>
+    <div className="container">
       <h1>Interview Questions</h1>
       <p><strong>Name:</strong> {name}</p>
       <p><strong>Role:</strong> {role}</p>
@@ -42,6 +42,16 @@ function Interview() {
       <p>
         Question {currentQuestion + 1} of {selectedQuestions.length}
       </p>
+      <div className="progress-bar">
+  <div
+    className="progress-fill"
+    style={{
+      width: `${
+        ((currentQuestion + 1) / selectedQuestions.length) * 100
+      }%`,
+    }}
+  ></div>
+</div>
 
       <h2>{selectedQuestions[currentQuestion].question}</h2>
 

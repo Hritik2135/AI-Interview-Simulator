@@ -5,10 +5,11 @@ function Home() {
 
   return (
     <div className="container">
-      <h1>AI Interview Simulator</h1>
+      <h1>🚀 AI Interview Simulator</h1>
 
       <p>
-        Practice technical interviews and improve your skills.
+        Practice interviews, improve confidence and get
+        placement-ready with AI powered mock interviews.
       </p>
 
       <button onClick={() => navigate("/setup")}>
