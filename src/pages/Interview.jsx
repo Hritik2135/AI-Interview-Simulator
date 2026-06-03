@@ -6,7 +6,7 @@ function Interview() {
   const name = localStorage.getItem("name");
   const role = localStorage.getItem("role");
   const difficulty = localStorage.getItem("difficulty");
-  const selectedQuestions = questions[role];
+ const selectedQuestions = questions[role][difficulty];
   const navigate = useNavigate();
   const [currentQuestion, setCurrentQuestion] = useState(0);
 
