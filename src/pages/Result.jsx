@@ -1,6 +1,12 @@
+import questions from "../data/questions";
 function Result() {
   const answers =
     JSON.parse(localStorage.getItem("answers")) || [];
+    const role = localStorage.getItem("role");
+const difficulty = localStorage.getItem("difficulty");
+
+const selectedQuestions =
+  questions[role][difficulty];
     let score = 0;
 
 answers.forEach((answer) => {
@@ -28,15 +34,42 @@ answers.forEach((answer) => {
 
       <h2>Your Answers</h2>
 
-      {answers.map((answer, index) => (
-        <div key={index}>
-          <h3>Question {index + 1}</h3>
+      {answers.map((answer, index) => {
+  let answerScore = 0;
 
-          <p>{answer}</p>
+  if (answer.length > 100) {
+    answerScore = 3;
+  } else if (answer.length > 50) {
+    answerScore = 2;
+  } else if (answer.length > 10) {
+    answerScore = 1;
+  }
 
-          <hr />
-        </div>
-      ))}
+  return (
+    <div key={index}>
+      <h3>
+        Question {index + 1}
+      </h3>
+
+      <p>
+        <strong>Question:</strong>{" "}
+        {selectedQuestions[index].question}
+      </p>
+
+      <p>
+        <strong>Your Answer:</strong>{" "}
+        {answer}
+      </p>
+
+      <p>
+        <strong>Rating:</strong>{" "}
+        {"⭐".repeat(answerScore)}
+      </p>
+
+      <hr />
+    </div>
+  );
+})}
     </div>
   );
 }
