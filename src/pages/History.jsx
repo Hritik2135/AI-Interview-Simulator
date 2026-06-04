@@ -1,4 +1,13 @@
 import { useNavigate } from "react-router-dom";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
 
 function History() {
   const navigate = useNavigate();
@@ -24,6 +33,13 @@ function History() {
           ) / history.length
         ).toFixed(1)
       : 0;
+
+  const chartData = history.map(
+    (item, index) => ({
+      interview: index + 1,
+      score: item.score,
+    })
+  );
 
   const clearHistory = () => {
     localStorage.removeItem("history");
@@ -60,6 +76,37 @@ function History() {
         </p>
       </div>
 
+      {history.length > 0 && (
+        <>
+          <h2>📈 Performance Analytics</h2>
+
+          <div
+            style={{
+              width: "100%",
+              height: "300px",
+              marginBottom: "30px",
+            }}
+          >
+            <ResponsiveContainer>
+              <LineChart data={chartData}>
+                <CartesianGrid strokeDasharray="3 3" />
+
+                <XAxis dataKey="interview" />
+
+                <YAxis />
+
+                <Tooltip />
+
+                <Line
+                  type="monotone"
+                  dataKey="score"
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+        </>
+      )}
+
       {history.length === 0 ? (
         <p>No interviews found.</p>
       ) : (
@@ -69,9 +116,11 @@ function History() {
           if (item.score >= 9) {
             badge = "🏆 Interview Master";
           } else if (item.score >= 7) {
-            badge = "🚀 Advanced Candidate";
+            badge =
+              "🚀 Advanced Candidate";
           } else if (item.score >= 4) {
-            badge = "⭐ Rising Developer";
+            badge =
+              "⭐ Rising Developer";
           }
 
           return (
