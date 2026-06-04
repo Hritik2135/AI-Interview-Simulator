@@ -1,7 +1,7 @@
-import jsPDF from "jspdf";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import questions from "../data/questions";
+import jsPDF from "jspdf";
 
 function Result() {
   const navigate = useNavigate();
@@ -13,7 +13,7 @@ function Result() {
   const difficulty = localStorage.getItem("difficulty");
 
   const selectedQuestions =
-    questions[role][difficulty];
+    questions[role]?.[difficulty] || [];
 
   let score = 0;
 
@@ -26,6 +26,19 @@ function Result() {
       score += 1;
     }
   });
+
+  const feedback = [];
+
+  if (score >= 7) {
+    feedback.push("✅ Strong interview performance");
+    feedback.push("✅ Detailed answers provided");
+  } else if (score >= 4) {
+    feedback.push("✅ Good understanding of concepts");
+    feedback.push("⚠ Add more details in answers");
+  } else {
+    feedback.push("⚠ Answers are too short");
+    feedback.push("⚠ Explain concepts more clearly");
+  }
 
   useEffect(() => {
     const history =
@@ -53,42 +66,43 @@ function Result() {
       );
     }
   }, []);
+
   const downloadPDF = () => {
-  const doc = new jsPDF();
+    const doc = new jsPDF();
 
-  doc.setFontSize(18);
-  doc.text("AI Interview Report", 20, 20);
+    doc.setFontSize(18);
+    doc.text("AI Interview Report", 20, 20);
 
-  doc.setFontSize(12);
+    doc.setFontSize(12);
 
-  doc.text(`Role: ${role}`, 20, 40);
-  doc.text(`Difficulty: ${difficulty}`, 20, 50);
-  doc.text(`Score: ${score}/9`, 20, 60);
+    doc.text(`Role: ${role}`, 20, 40);
+    doc.text(`Difficulty: ${difficulty}`, 20, 50);
+    doc.text(`Score: ${score}/9`, 20, 60);
 
-  let y = 80;
+    let y = 80;
 
-  answers.forEach((answer, index) => {
-    doc.text(
-      `Q${index + 1}: ${
-        selectedQuestions[index].question
-      }`,
-      20,
-      y
-    );
+    answers.forEach((answer, index) => {
+      doc.text(
+        `Q${index + 1}: ${
+          selectedQuestions[index]?.question || ""
+        }`,
+        20,
+        y
+      );
 
-    y += 10;
+      y += 10;
 
-    doc.text(
-      `Answer: ${answer}`,
-      20,
-      y
-    );
+      doc.text(
+        `Answer: ${answer}`,
+        20,
+        y
+      );
 
-    y += 20;
-  });
+      y += 20;
+    });
 
-  doc.save("Interview_Report.pdf");
-};
+    doc.save("Interview_Report.pdf");
+  };
 
   return (
     <div className="container">
@@ -103,6 +117,14 @@ function Result() {
           ? "Good Job 👍"
           : "Keep Practicing 💪"}
       </p>
+
+      <h2>🤖 AI Feedback</h2>
+
+      <ul>
+        {feedback.map((item, index) => (
+          <li key={index}>{item}</li>
+        ))}
+      </ul>
 
       <h2>Your Answers</h2>
 
@@ -125,7 +147,7 @@ function Result() {
 
             <p>
               <strong>Question:</strong>{" "}
-              {selectedQuestions[index].question}
+              {selectedQuestions[index]?.question}
             </p>
 
             <p>
@@ -143,18 +165,19 @@ function Result() {
         );
       })}
 
+      <button onClick={downloadPDF}>
+        Download PDF Report
+      </button>
+
+      <br />
+      <br />
+
       <button
         onClick={() => {
           localStorage.removeItem("answers");
           navigate("/");
         }}
       >
-        <button onClick={downloadPDF}>
-  Download PDF Report
-</button>
-
-<br />
-<br />
         Restart Interview
       </button>
     </div>
