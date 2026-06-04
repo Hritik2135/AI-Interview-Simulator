@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import questions from "../data/questions";
 import { useNavigate } from "react-router-dom";
 
@@ -17,6 +17,22 @@ function Interview() {
 
   const [answers, setAnswers] = useState([]);
   const [answer, setAnswer] = useState("");
+
+  const [timeLeft, setTimeLeft] =
+    useState(30);
+
+  useEffect(() => {
+    if (timeLeft === 0) {
+      nextQuestion();
+      return;
+    }
+
+    const timer = setTimeout(() => {
+      setTimeLeft(timeLeft - 1);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, [timeLeft]);
 
   const startListening = () => {
     const SpeechRecognition =
@@ -61,6 +77,8 @@ function Interview() {
       setCurrentQuestion(
         currentQuestion + 1
       );
+
+      setTimeLeft(30);
     } else {
       localStorage.setItem(
         "answers",
@@ -87,6 +105,10 @@ function Interview() {
         <strong>Difficulty:</strong>{" "}
         {difficulty}
       </p>
+
+      <h2>
+        ⏱️ Time Left: {timeLeft}s
+      </h2>
 
       <p>
         Question {currentQuestion + 1} of{" "}
