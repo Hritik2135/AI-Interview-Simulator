@@ -15,6 +15,13 @@ function Home() {
       <button onClick={() => navigate("/setup")}>
         Start Interview
       </button>
+
+      <br />
+      <br />
+
+      <button onClick={() => navigate("/history")}>
+        View History
+      </button>
     </div>
   );
 }

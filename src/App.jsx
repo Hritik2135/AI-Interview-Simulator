@@ -8,6 +8,7 @@ import Home from "./pages/Home";
 import Setup from "./pages/Setup";
 import Interview from "./pages/Interview";
 import Result from "./pages/Result";
+import History from "./pages/History";
 
 function App() {
   return (
@@ -33,6 +34,10 @@ function App() {
           path="/result"
           element={<Result />}
         />
+        <Route
+  path="/history"
+  element={<History />}
+/>
 
       </Routes>
     </BrowserRouter>
