@@ -1,3 +1,4 @@
+import jsPDF from "jspdf";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import questions from "../data/questions";
@@ -52,6 +53,42 @@ function Result() {
       );
     }
   }, []);
+  const downloadPDF = () => {
+  const doc = new jsPDF();
+
+  doc.setFontSize(18);
+  doc.text("AI Interview Report", 20, 20);
+
+  doc.setFontSize(12);
+
+  doc.text(`Role: ${role}`, 20, 40);
+  doc.text(`Difficulty: ${difficulty}`, 20, 50);
+  doc.text(`Score: ${score}/9`, 20, 60);
+
+  let y = 80;
+
+  answers.forEach((answer, index) => {
+    doc.text(
+      `Q${index + 1}: ${
+        selectedQuestions[index].question
+      }`,
+      20,
+      y
+    );
+
+    y += 10;
+
+    doc.text(
+      `Answer: ${answer}`,
+      20,
+      y
+    );
+
+    y += 20;
+  });
+
+  doc.save("Interview_Report.pdf");
+};
 
   return (
     <div className="container">
@@ -112,6 +149,12 @@ function Result() {
           navigate("/");
         }}
       >
+        <button onClick={downloadPDF}>
+  Download PDF Report
+</button>
+
+<br />
+<br />
         Restart Interview
       </button>
     </div>
