@@ -1,29 +1,77 @@
 body {
   margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
+  font-family: "Poppins", sans-serif;
   background: linear-gradient(
     135deg,
     #0f172a,
-    #1e293b
+    #1e293b,
+    #334155
   );
   min-height: 100vh;
+  color: white;
 }
 
+/* MAIN CONTAINER */
 .container {
-  max-width: 850px;
-  margin: 50px auto;
+  width: 90%;
+  max-width: 900px;
+  margin: 40px auto;
+
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+
   padding: 30px;
-  background: white;
   border-radius: 20px;
-  text-align: center;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+
+  color: rgb(20, 1, 1);
 }
 
 h1 {
-  color: #1e293b;
+  text-align: center;
 }
 
+/* =========================
+   ✅ WHITE INFO BOX FIX
+   (IMPORTANT PART)
+========================= */
+.info-box {
+  background: #fd9393;
+  color: #000000;   /* 👈 MAIN FIX (BLACK TEXT) */
+  padding: 15px;
+  border-radius: 12px;
+  margin-top: 15px;
+}
+
+/* ensure inside elements also black */
+.info-box * {
+  color: #000 !important;
+}
+
+/* INPUTS (outside white box) */
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  margin-top: 10px;
+
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  font-size: 16px;
+
+  outline: none;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* BUTTON */
 button {
   background: #2563eb;
   color: white;
@@ -31,33 +79,43 @@ button {
   padding: 12px 24px;
   border-radius: 10px;
   cursor: pointer;
-  font-size: 16px;
+  transition: 0.3s;
 }
 
 button:hover {
-  transform: scale(1.05);
+  transform: translateY(-3px);
+  background: #1d4ed8;
 }
 
-textarea,
-input,
-select {
-  width: 100%;
-  padding: 12px;
-  border-radius: 10px;
-  border: 1px solid #ccc;
-  box-sizing: border-box;
+/* CAMERA BOX */
+video {
+  width: 250px;
+  height: 200px;
+  background: black;
+  border-radius: 12px;
 }
+
+/* PROGRESS BAR */
 .progress-bar {
   width: 100%;
-  height: 20px;
-  background: #e5e7eb;
+  height: 12px;
+  background: #334155;
   border-radius: 20px;
-  margin: 20px 0;
   overflow: hidden;
+  margin-top: 15px;
 }
 
 .progress-fill {
   height: 100%;
-  background: #2563eb;
-  transition: width 0.4s ease;
+  background: linear-gradient(90deg, #06b6d4, #3b82f6);
+  width: 60%;
+}
+/* CAMERA SETUP CENTER FIX */
+.camera-setup {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  margin-top: 20px;
 }
