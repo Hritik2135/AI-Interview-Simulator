@@ -12,14 +12,6 @@ function Setup() {
   const [role, setRole] = useState("Java Developer");
   const [difficulty, setDifficulty] = useState("Easy");
 
-  useEffect(() => {
-  const savedName =
-    localStorage.getItem("name");
-
-  if (savedName) {
-    navigate("/home");
-  }
-}, []);
 
   const startInterview = () => {
     if (!name.trim()) {
