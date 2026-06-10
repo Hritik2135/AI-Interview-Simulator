@@ -131,7 +131,7 @@ console.log("Questions:", selectedQuestions);
     }
 
     try {
-      const response = await fetch("http://localhost:5000/next-question", {
+      const response = await fetch("https://ai-interview-simulator-backend-7zlw.onrender.com/next-question", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ role, answer }),
